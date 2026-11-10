@@ -282,6 +282,27 @@ def show_results(counts, zones, is_average=False):
     perf2.metric("⚡ AI Processing", "ACTIVE")
     perf3.metric("🎯 Detection Confidence", "0.25")
     perf4.metric("🎥 Video Tracking", "READY")
+    st.subheader("📈 Traffic Intelligence Insights")
+
+    if sum(zones.values()) > 0:
+        busiest_zone = max(zones, key=zones.get)
+        quietest_zone = min(zones, key=zones.get)
+
+        col1, col2, col3 = st.columns(3)
+
+        col1.metric("🚗 Busiest Zone", busiest_zone)
+        col2.metric("🟢 Least Busy Zone", quietest_zone)
+        col3.metric("📊 Total Vehicles", f"{total:.2f}" if is_average else int(total))
+
+        st.markdown("#### Traffic Distribution")
+
+        for direction, count in zones.items():
+            percentage = count / sum(zones.values())
+            st.write(f"{direction}: {percentage * 100:.1f}%")
+            st.progress(percentage)
+
+    else:
+        st.info("No traffic data available for insights.")
     st.subheader("🚦 Smart Traffic Light Recommendations")
 
     col_left, col_center, col_right = st.columns(3)
