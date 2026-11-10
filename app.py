@@ -17,6 +17,29 @@ def get_supabase():
 
 supabase = get_supabase()
 
+def save_traffic_history(counts, zones, level, analysis_type="Analysis", analyzed_frames=0):
+    try:
+        total = int(sum(counts.values()))
+        busiest_zone = max(zones, key=zones.get) if sum(zones.values()) > 0 else "None"
+
+        data = {
+            "analysis_type": analysis_type,
+            "total_vehicles": total,
+            "traffic_level": level,
+            "busiest_zone": busiest_zone,
+            "left_vehicles": int(zones["Left"]),
+            "center_vehicles": int(zones["Center"]),
+            "right_vehicles": int(zones["Right"]),
+            "analyzed_frames": int(analyzed_frames)
+        }
+
+        supabase.table("traffic_history").insert(data).execute()
+        return True
+
+    except Exception as e:
+        st.error(f"Could not save traffic history: {e}")
+        return False
+
 st.set_page_config(
     page_title="Yerevan Smart Traffic AI",
     page_icon="🚦",
