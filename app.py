@@ -201,6 +201,7 @@ def green_times(zones):
 
     return times
 
+```python
 def show_results(counts, zones, is_average=False):
     total = sum(counts.values())
     level, suggested_time = traffic_level(total)
@@ -210,23 +211,14 @@ def show_results(counts, zones, is_average=False):
 
     col1, col2, col3, col4 = st.columns(4)
 
-if is_average:
-    col1.metric("Average Vehicles / Frame", f"{total:.2f}")
-else:
-    col1.metric("Total Vehicles", int(total))
+    if is_average:
+        col1.metric("Average Vehicles / Frame", f"{total:.2f}")
+    else:
+        col1.metric("Total Vehicles", int(total))
 
-col2.metric("Traffic Level", level)
-
-col3.metric(
-    "Suggested Green Time",
-    f"{suggested_time} sec"
-)
-
-col4.metric(
-    "AI Detection",
-    "ACTIVE",
-    delta="Analysis completed"
-)
+    col2.metric("Traffic Level", level)
+    col3.metric("Suggested Green Time", f"{suggested_time} sec")
+    col4.metric("AI Detection", "ACTIVE", delta="Analysis completed")
 
     st.subheader("🚗 Vehicle Statistics")
 
@@ -265,6 +257,7 @@ col4.metric(
 
     st.pyplot(fig)
     plt.close(fig)
+```
 
 tab1, tab2 = st.tabs([
     "🖼️ Image Analysis",
