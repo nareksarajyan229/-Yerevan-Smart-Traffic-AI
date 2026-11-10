@@ -694,7 +694,7 @@ show_results(
     analyzed_frames=analyzed_frames
 )
 
-        else:
+            else:
                 st.warning(
                     "No vehicles could be tracked in this video."
                 )           
