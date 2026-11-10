@@ -673,8 +673,11 @@ with tab2:
                     "🚦 Busiest Zone",
                     busiest_zone
                 )
-
-                show_results(
+st.session_state["video_counts"] = unique_counts
+st.session_state["video_zones"] = unique_zones
+st.session_state["video_frames"] = analyzed_frames
+                
+show_results(
     unique_counts,
     unique_zones,
     analysis_type="Video Analysis",
