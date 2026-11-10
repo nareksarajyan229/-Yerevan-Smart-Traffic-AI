@@ -674,7 +674,12 @@ with tab2:
                     busiest_zone
                 )
 
-                show_results(unique_counts, unique_zones)
+                show_results(
+    unique_counts,
+    unique_zones,
+    analysis_type="Video Analysis",
+    analyzed_frames=analyzed_frames
+)
 
             else:
                 st.warning(
