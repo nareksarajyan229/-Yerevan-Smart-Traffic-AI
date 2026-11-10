@@ -215,7 +215,17 @@ def show_results(counts, zones, is_average=False):
     else:
         col1.metric("Total Vehicles", int(total))
 
-    col2.metric("Traffic Level", level)
+    if level == "LOW":
+    traffic_color = "🟢"
+elif level == "MEDIUM":
+    traffic_color = "🟡"
+else:
+    traffic_color = "🔴"
+
+col2.metric(
+    "Traffic Level",
+    f"{traffic_color} {level}"
+)
     col3.metric("Suggested Green Time", f"{suggested_time} sec")
     col4.metric("AI Detection", "ACTIVE", delta="Analysis completed")
 
