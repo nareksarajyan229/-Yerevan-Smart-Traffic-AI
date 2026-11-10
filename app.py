@@ -9,6 +9,14 @@ import matplotlib.pyplot as plt
 from ultralytics import YOLO
 from supabase import create_client
 
+@st.cache_resource
+def get_supabase():
+    url = st.secrets["supabase"]["url"]
+    key = st.secrets["supabase"]["key"]
+    return create_client(url, key)
+
+supabase = get_supabase()
+
 st.set_page_config(
     page_title="Yerevan Smart Traffic AI",
     page_icon="🚦",
