@@ -208,15 +208,25 @@ def show_results(counts, zones, is_average=False):
     st.markdown("---")
     st.header("📊 Traffic Analysis")
 
-    col1, col2, col3 = st.columns(3)
+    col1, col2, col3, col4 = st.columns(4)
 
-    if is_average:
-        col1.metric("Average Vehicles / Frame", f"{total:.2f}")
-    else:
-        col1.metric("Total Vehicles", int(total))
+if is_average:
+    col1.metric("Average Vehicles / Frame", f"{total:.2f}")
+else:
+    col1.metric("Total Vehicles", int(total))
 
-    col2.metric("Traffic Level", level)
-    col3.metric("Suggested Green Time", f"{suggested_time} sec")
+col2.metric("Traffic Level", level)
+
+col3.metric(
+    "Suggested Green Time",
+    f"{suggested_time} sec"
+)
+
+col4.metric(
+    "AI Detection",
+    "ACTIVE",
+    delta="Analysis completed"
+)
 
     st.subheader("🚗 Vehicle Statistics")
 
