@@ -273,13 +273,30 @@ def show_results(counts, zones, is_average=False):
         f"Total recommended green-light time: {sum(times.values())} seconds"
     )
 
-    fig, ax = plt.subplots()
-    ax.bar(zones.keys(), zones.values())
-    ax.set_title("Vehicles by Image Zone")
-    ax.set_ylabel("Average Vehicles" if is_average else "Number of Vehicles")
+    col_chart1, col_chart2 = st.columns(2)
 
-    st.pyplot(fig)
-    plt.close(fig)
+    with col_chart1:
+        fig1, ax1 = plt.subplots()
+        ax1.bar(zones.keys(), zones.values())
+        ax1.set_title("Vehicles by Traffic Zone")
+        ax1.set_ylabel("Number of Vehicles")
+        st.pyplot(fig1)
+        plt.close(fig1)
+
+    with col_chart2:
+        if sum(zones.values()) > 0:
+            fig2, ax2 = plt.subplots()
+            ax2.pie(
+                zones.values(),
+                labels=zones.keys(),
+                autopct="%1.1f%%",
+                startangle=90
+            )
+            ax2.set_title("Traffic Distribution")
+            st.pyplot(fig2)
+            plt.close(fig2)
+        else:
+            st.info("No vehicles detected for distribution analysis.")
 
 
 
