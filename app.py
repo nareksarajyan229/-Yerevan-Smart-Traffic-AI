@@ -616,7 +616,7 @@ with tab2:
             cap.release()
             os.remove(video_path)
 
-                if track_info:
+            if track_info:
 
                 unique_counts = {
                     name: 0 for name in VEHICLE_CLASSES.values()
