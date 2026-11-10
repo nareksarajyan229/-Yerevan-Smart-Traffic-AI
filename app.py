@@ -103,8 +103,54 @@ hr {
 </style>
 """, unsafe_allow_html=True)
 
-st.title("🚦 YEREVAN SMART TRAFFIC AI")
-st.subheader("AI-Powered Traffic Monitoring System")
+st.markdown("""
+<div style="
+    background: linear-gradient(120deg, #10243b, #123c52);
+    padding: 30px;
+    border-radius: 18px;
+    border: 1px solid #2563eb;
+    margin-bottom: 25px;
+">
+
+    <div style="
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+    ">
+
+        <div>
+            <h1 style="
+                color: #38bdf8;
+                font-size: 36px;
+                margin: 0;
+            ">
+                🚦 YEREVAN SMART TRAFFIC AI
+            </h1>
+
+            <p style="
+                color: #cbd5e1;
+                font-size: 17px;
+                margin-top: 12px;
+            ">
+                AI-Powered Intelligent Traffic Monitoring System
+            </p>
+        </div>
+
+        <div style="
+            background: #064e3b;
+            color: #4ade80;
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-weight: bold;
+            border: 1px solid #22c55e;
+        ">
+            ● SYSTEM READY
+        </div>
+
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
 @st.cache_resource
 def load_model():
