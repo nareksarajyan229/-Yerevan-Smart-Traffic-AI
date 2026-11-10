@@ -19,7 +19,7 @@ st.subheader("AI-Powered Traffic Monitoring System")
 
 @st.cache_resource
 def load_model():
-    return YOLO("/content/yolo11n.pt")
+    return YOLO("yolo11n.pt")
 
 model = load_model()
 
@@ -242,7 +242,7 @@ with tab2:
 
             cap = cv2.VideoCapture(video_path)
 
-            tracking_model = YOLO("/content/yolo11n.pt")
+            tracking_model = load_model()
 
             track_info = {}
 
@@ -266,7 +266,7 @@ with tab2:
                 results = tracking_model.track(
                     frame,
                     persist=True,
-                    tracker="/content/custom_bytetrack.yaml",
+                    tracker="custom_bytetrack.yaml",
                     classes=list(VEHICLE_CLASSES.keys()),
                     conf=0.20,
                     iou=0.5,
