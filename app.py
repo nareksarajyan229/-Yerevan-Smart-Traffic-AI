@@ -512,11 +512,10 @@ with tab2:
     st.header("Upload Traffic Video")
 
     uploaded_video = st.file_uploader(
-    "Choose a video",
-    type=["mp4", "avi", "mov"],
-    key="traffic_video"
-)
-    
+        "Choose a video",
+        type=["mp4", "avi", "mov"],
+        key="traffic_video"
+    )
 
     frame_step = st.slider(
         "Analyze every N frames",
@@ -528,6 +527,13 @@ with tab2:
     if uploaded_video is not None:
 
         if st.button("Start Video Analysis"):
+
+            # Clear previous results
+            st.session_state.pop("video_counts", None)
+            st.session_state.pop("video_zones", None)
+            st.session_state.pop("video_frames", None)
+            st.session_state.pop("video_preview", None)
+            st.session_state.pop("video_total", None)
 
             suffix = os.path.splitext(uploaded_video.name)[1]
 
@@ -632,73 +638,85 @@ with tab2:
                     unique_counts[vehicle["class"]] += 1
                     unique_zones[vehicle["zone"]] += 1
 
-                st.success("Video tracking completed!")
-
-                if preview is not None:
-                    st.image(
-                        cv2.cvtColor(preview, cv2.COLOR_BGR2RGB),
-                        caption="ByteTrack Vehicle Tracking",
-                        use_container_width=True
-                    )
-
-                col1, col2 = st.columns(2)
-
-                col1.metric("Unique Vehicles", len(track_info))
-                col2.metric("Analyzed Frames", analyzed_frames)
-
-                st.subheader("📊 Video Analysis Statistics")
-
-                busiest_zone = max(unique_zones, key=unique_zones.get)
-
-                stat1, stat2, stat3, stat4 = st.columns(4)
-
-                stat1.metric(
-                    "🚗 Tracked Vehicles",
-                    len(track_info)
-                )
-
-                stat2.metric(
-                    "🎞️ Analyzed Frames",
-                    analyzed_frames
-                )
-
-                average = (
-                    len(track_info) / analyzed_frames
-                    if analyzed_frames > 0 else 0
-                )
-
-                stat3.metric(
-                    "📈 Average Vehicles / Frame",
-                    f"{average:.2f}"
-                )
-
-                stat4.metric(
-                    "🚦 Busiest Zone",
-                    busiest_zone
-                )
-
+                # Save results in session state
                 st.session_state["video_counts"] = unique_counts
                 st.session_state["video_zones"] = unique_zones
                 st.session_state["video_frames"] = analyzed_frames
-
-                show_results(
-                    unique_counts,
-                    unique_zones,
-                    analysis_type="Video Analysis",
-                    analyzed_frames=analyzed_frames
-                )
+                st.session_state["video_preview"] = preview
+                st.session_state["video_total"] = len(track_info)
 
             else:
                 st.warning(
                     "No vehicles could be tracked in this video."
                 )
 
+        # Display saved results outside the Start button
+        if "video_counts" in st.session_state:
+
+            unique_counts = st.session_state["video_counts"]
+            unique_zones = st.session_state["video_zones"]
+            analyzed_frames = st.session_state["video_frames"]
+            preview = st.session_state["video_preview"]
+            total_vehicles = st.session_state["video_total"]
+
+            st.success("Video tracking completed!")
+
+            if preview is not None:
+                st.image(
+                    cv2.cvtColor(preview, cv2.COLOR_BGR2RGB),
+                    caption="ByteTrack Vehicle Tracking",
+                    use_container_width=True
+                )
+
+            col1, col2 = st.columns(2)
+
+            col1.metric("Unique Vehicles", total_vehicles)
+            col2.metric("Analyzed Frames", analyzed_frames)
+
+            st.subheader("📊 Video Analysis Statistics")
+
+            busiest_zone = max(
+                unique_zones,
+                key=unique_zones.get
+            )
+
+            stat1, stat2, stat3, stat4 = st.columns(4)
+
+            stat1.metric(
+                "🚗 Tracked Vehicles",
+                total_vehicles
+            )
+
+            stat2.metric(
+                "🎞️ Analyzed Frames",
+                analyzed_frames
+            )
+
+            average = (
+                total_vehicles / analyzed_frames
+                if analyzed_frames > 0 else 0
+            )
+
+            stat3.metric(
+                "📈 Average Vehicles / Frame",
+                f"{average:.2f}"
+            )
+
+            stat4.metric(
+                "🚦 Busiest Zone",
+                busiest_zone
+            )
+
+            show_results(
+                unique_counts,
+                unique_zones,
+                analysis_type="Video Analysis",
+                analyzed_frames=analyzed_frames
+            )
+
 
 st.markdown("---")
-st.caption(
-    "Yerevan Smart Traffic AI | Educational Prototype | "
-    "Traffic-light timings are recommendations only."
-)
+
 st.caption(
     "Yerevan Smart Traffic AI | Educational Prototype | "
     "Traffic-light timings are recommendations only."
