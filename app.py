@@ -7,6 +7,7 @@ import tempfile
 import os
 import matplotlib.pyplot as plt
 from ultralytics import YOLO
+from supabase import create_client
 
 st.set_page_config(
     page_title="Yerevan Smart Traffic AI",
