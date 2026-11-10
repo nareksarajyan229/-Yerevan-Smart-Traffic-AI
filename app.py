@@ -232,8 +232,9 @@ def green_times(zones):
         times[fractions[i]] += 1
 
     return times
+def show_results(counts, zones, is_average=False,
+                 analysis_type="Image Analysis", analyzed_frames=0):
 
-def show_results(counts, zones, is_average=False):
     total = sum(counts.values())
     level, suggested_time = traffic_level(total)
 
@@ -242,7 +243,7 @@ def show_results(counts, zones, is_average=False):
     overview1, overview2, overview3, overview4 = st.columns(4)
 
     overview1.metric("🟢 System Status", "ONLINE")
-    
+
     if is_average:
         overview2.metric("🚗 Vehicles / Frame", f"{total:.2f}")
     else:
@@ -290,8 +291,6 @@ def show_results(counts, zones, is_average=False):
 
     times = green_times(zones)
 
-   
-
     st.subheader("🤖 AI Analysis Summary")
 
     if sum(zones.values()) > 0:
@@ -320,7 +319,8 @@ def show_results(counts, zones, is_average=False):
 
     else:
         st.info("No vehicles detected. Traffic is currently clear.")
-        st.subheader("⚙️ System Performance Panel")
+
+    st.subheader("⚙️ System Performance Panel")
 
     perf1, perf2, perf3, perf4 = st.columns(4)
 
@@ -328,9 +328,11 @@ def show_results(counts, zones, is_average=False):
     perf2.metric("⚡ AI Processing", "ACTIVE")
     perf3.metric("🎯 Detection Confidence", "0.25")
     perf4.metric("🎥 Video Tracking", "READY")
+
     st.subheader("📈 Traffic Intelligence Insights")
 
     if sum(zones.values()) > 0:
+
         busiest_zone = max(zones, key=zones.get)
         quietest_zone = min(zones, key=zones.get)
 
@@ -338,7 +340,10 @@ def show_results(counts, zones, is_average=False):
 
         col1.metric("🚗 Busiest Zone", busiest_zone)
         col2.metric("🟢 Least Busy Zone", quietest_zone)
-        col3.metric("📊 Total Vehicles", f"{total:.2f}" if is_average else int(total))
+        col3.metric(
+            "📊 Total Vehicles",
+            f"{total:.2f}" if is_average else int(total)
+        )
 
         st.markdown("#### Traffic Distribution")
 
@@ -349,11 +354,12 @@ def show_results(counts, zones, is_average=False):
 
     else:
         st.info("No traffic data available for insights.")
-        st.subheader("🧠 AI Traffic Recommendations")
+
+    st.subheader("🧠 AI Traffic Recommendations")
 
     if sum(zones.values()) > 0:
+
         busiest_zone = max(zones, key=zones.get)
-        busiest_count = zones[busiest_zone]
 
         if level == "HIGH":
             st.error(
@@ -361,12 +367,14 @@ def show_results(counts, zones, is_average=False):
                 f"Consider prioritizing this direction."
             )
             st.write("Recommendation: Review traffic signal timing.")
-            
+
         elif level == "MEDIUM":
             st.warning(
                 f"🟡 Moderate traffic detected in {busiest_zone}."
             )
-            st.write("Recommendation: Balance green-light times between directions.")
+            st.write(
+                "Recommendation: Balance green-light times between directions."
+            )
 
         else:
             st.success("🟢 Traffic conditions are currently normal.")
@@ -374,6 +382,7 @@ def show_results(counts, zones, is_average=False):
 
     else:
         st.info("No recommendations available without traffic data.")
+
     st.subheader("🚦 Smart Traffic Light Recommendations")
 
     col_left, col_center, col_right = st.columns(3)
@@ -385,19 +394,14 @@ def show_results(counts, zones, is_average=False):
     ]
 
     for title, direction, column in directions:
+
         with column:
             with st.container(border=True):
+
                 st.markdown(f"### {title}")
 
-                st.metric(
-                    "Vehicles",
-                    f"{zones[direction]:.2f}"
-                )
-
-                st.metric(
-                    "Green Light",
-                    f"{times[direction]} sec"
-                )
+                st.metric("Vehicles", f"{zones[direction]:.2f}")
+                st.metric("Green Light", f"{times[direction]} sec")
 
     st.success(
         f"Total recommended green-light time: {sum(times.values())} seconds"
@@ -406,25 +410,49 @@ def show_results(counts, zones, is_average=False):
     col_chart1, col_chart2 = st.columns(2)
 
     with col_chart1:
+
         fig1, ax1 = plt.subplots()
         ax1.bar(zones.keys(), zones.values())
         ax1.set_title("Vehicles by Traffic Zone")
         ax1.set_ylabel("Number of Vehicles")
+
         st.pyplot(fig1)
         plt.close(fig1)
 
     with col_chart2:
+
         if sum(zones.values()) > 0:
+
             fig2, ax2 = plt.subplots()
+
             ax2.pie(
                 zones.values(),
                 labels=zones.keys(),
                 autopct="%1.1f%%",
                 startangle=90
             )
+
             ax2.set_title("Traffic Distribution")
+
             st.pyplot(fig2)
             plt.close(fig2)
+
+        else:
+            st.info("No vehicles detected for distribution analysis.")
+
+    st.markdown("---")
+
+    if st.button("💾 Save to Traffic History"):
+
+        if save_traffic_history(
+            counts,
+            zones,
+            level,
+            analysis_type=analysis_type,
+            analyzed_frames=analyzed_frames
+        ):
+            st.success("✅ Traffic analysis saved successfully!")
+
         else:
             st.info("No vehicles detected for distribution analysis.")
 
