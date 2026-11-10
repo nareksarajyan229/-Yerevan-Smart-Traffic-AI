@@ -201,7 +201,6 @@ def green_times(zones):
 
     return times
 
-```python
 def show_results(counts, zones, is_average=False):
     total = sum(counts.values())
     level, suggested_time = traffic_level(total)
@@ -264,7 +263,7 @@ def show_results(counts, zones, is_average=False):
 
     st.pyplot(fig)
     plt.close(fig)
-```
+
 
 
 tab1, tab2 = st.tabs([
