@@ -274,6 +274,14 @@ def show_results(counts, zones, is_average=False):
 
     else:
         st.info("No vehicles detected. Traffic is currently clear.")
+        st.subheader("⚙️ System Performance Panel")
+
+    perf1, perf2, perf3, perf4 = st.columns(4)
+
+    perf1.metric("🧠 YOLO Model", "LOADED")
+    perf2.metric("⚡ AI Processing", "ACTIVE")
+    perf3.metric("🎯 Detection Confidence", "0.25")
+    perf4.metric("🎥 Video Tracking", "READY")
     st.subheader("🚦 Smart Traffic Light Recommendations")
 
     col_left, col_center, col_right = st.columns(3)
