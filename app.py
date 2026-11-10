@@ -303,6 +303,31 @@ def show_results(counts, zones, is_average=False):
 
     else:
         st.info("No traffic data available for insights.")
+        st.subheader("🧠 AI Traffic Recommendations")
+
+    if sum(zones.values()) > 0:
+        busiest_zone = max(zones, key=zones.get)
+        busiest_count = zones[busiest_zone]
+
+        if level == "HIGH":
+            st.error(
+                f"🔴 Heavy traffic in {busiest_zone}. "
+                f"Consider prioritizing this direction."
+            )
+            st.write("Recommendation: Review traffic signal timing.")
+            
+        elif level == "MEDIUM":
+            st.warning(
+                f"🟡 Moderate traffic detected in {busiest_zone}."
+            )
+            st.write("Recommendation: Balance green-light times between directions.")
+
+        else:
+            st.success("🟢 Traffic conditions are currently normal.")
+            st.write("Recommendation: Keep the current timing plan.")
+
+    else:
+        st.info("No recommendations available without traffic data.")
     st.subheader("🚦 Smart Traffic Light Recommendations")
 
     col_left, col_center, col_right = st.columns(3)
