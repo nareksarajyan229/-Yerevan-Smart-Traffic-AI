@@ -246,11 +246,28 @@ def show_results(counts, zones, is_average=False):
 
     st.subheader("🚦 Smart Traffic Light Recommendations")
 
-    for direction, count in zones.items():
-        st.write(
-            f"**{direction}:** {count:.2f} vehicles — "
-            f"Recommended green light: {times[direction]} seconds"
-        )
+    col_left, col_center, col_right = st.columns(3)
+
+    directions = [
+        ("⬅️ LEFT", "Left", col_left),
+        ("⬆️ CENTER", "Center", col_center),
+        ("➡️ RIGHT", "Right", col_right)
+    ]
+
+    for title, direction, column in directions:
+        with column:
+            with st.container(border=True):
+                st.markdown(f"### {title}")
+
+                st.metric(
+                    "Vehicles",
+                    f"{zones[direction]:.2f}"
+                )
+
+                st.metric(
+                    "Green Light",
+                    f"{times[direction]} sec"
+                )
 
     st.success(
         f"Total recommended green-light time: {sum(times.values())} seconds"
