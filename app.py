@@ -244,7 +244,7 @@ def show_results(counts, zones, is_average=False):
 
     times = green_times(zones)
 
-        st.subheader("🤖 AI Analysis Summary")
+    st.subheader("🤖 AI Analysis Summary")
 
     if sum(zones.values()) > 0:
 
