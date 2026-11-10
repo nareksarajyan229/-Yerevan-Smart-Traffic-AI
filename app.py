@@ -13,6 +13,95 @@ st.set_page_config(
     page_icon="🚦",
     layout="wide"
 )
+st.markdown("""
+<style>
+
+/* Main background */
+.stApp {
+    background: linear-gradient(135deg, #080d18 0%, #101827 50%, #080d18 100%);
+    color: #f1f5f9;
+}
+
+/* Main content */
+.block-container {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    max-width: 1450px;
+}
+
+/* Headings */
+h1 {
+    color: #38bdf8 !important;
+    font-weight: 800 !important;
+    letter-spacing: 1px;
+}
+
+h2, h3 {
+    color: #e2e8f0 !important;
+}
+
+/* Text */
+p, label, span {
+    color: #cbd5e1;
+}
+
+/* Tabs */
+.stTabs [data-baseweb="tab-list"] {
+    gap: 12px;
+    border-bottom: 1px solid #263449;
+}
+
+.stTabs [data-baseweb="tab"] {
+    background: #172235;
+    border-radius: 10px 10px 0 0;
+    padding: 12px 22px;
+}
+
+/* Upload box */
+[data-testid="stFileUploader"] {
+    background: #172235;
+    border: 1px solid #334155;
+    border-radius: 14px;
+    padding: 18px;
+}
+
+/* Metrics */
+[data-testid="stMetric"] {
+    background: linear-gradient(145deg, #172235, #1e293b);
+    border: 1px solid #334155;
+    border-radius: 14px;
+    padding: 20px;
+}
+
+/* Buttons */
+.stButton > button {
+    background: linear-gradient(90deg, #0284c7, #2563eb);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 24px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.stButton > button:hover {
+    background: linear-gradient(90deg, #0ea5e9, #3b82f6);
+    transform: translateY(-2px);
+}
+
+/* Dataframes */
+[data-testid="stDataFrame"] {
+    border: 1px solid #334155;
+    border-radius: 12px;
+}
+
+/* Divider */
+hr {
+    border-color: #334155;
+}
+
+</style>
+""", unsafe_allow_html=True)
 
 st.title("🚦 YEREVAN SMART TRAFFIC AI")
 st.subheader("AI-Powered Traffic Monitoring System")
