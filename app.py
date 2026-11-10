@@ -616,7 +616,7 @@ with tab2:
             cap.release()
             os.remove(video_path)
 
-            if track_info:
+                       if track_info:
 
                 unique_counts = {
                     name: 0 for name in VEHICLE_CLASSES.values()
@@ -662,16 +662,9 @@ with tab2:
                     analyzed_frames
                 )
 
-                average = len(track_info) / analyzed_frames if analyzed_frames > 0 else 0
-
-                stat3.metric(
-                    "📈 Average Vehicles / Frame",
-                    f"{average:.2f}"
-                )
-
-                stat4.metric(
-                    "🚦 Busiest Zone",
-                    busiest_zone
+                average = (
+                    len(track_info) / analyzed_frames
+                    if analyzed_frames > 0 else 0
                 )
 
                 stat3.metric(
@@ -683,21 +676,22 @@ with tab2:
                     "🚦 Busiest Zone",
                     busiest_zone
                 )
-st.session_state["video_counts"] = unique_counts
-st.session_state["video_zones"] = unique_zones
-st.session_state["video_frames"] = analyzed_frames
-                
-show_results(
-    unique_counts,
-    unique_zones,
-    analysis_type="Video Analysis",
-    analyzed_frames=analyzed_frames
-)
+
+                st.session_state["video_counts"] = unique_counts
+                st.session_state["video_zones"] = unique_zones
+                st.session_state["video_frames"] = analyzed_frames
+
+                show_results(
+                    unique_counts,
+                    unique_zones,
+                    analysis_type="Video Analysis",
+                    analyzed_frames=analyzed_frames
+                )
 
             else:
                 st.warning(
                     "No vehicles could be tracked in this video."
-                )           
+                )
 
 
 st.markdown("---")
@@ -705,15 +699,6 @@ st.caption(
     "Yerevan Smart Traffic AI | Educational Prototype | "
     "Traffic-light timings are recommendations only."
 )
-
-
-            else:
-                st.warning(
-                    "No vehicles could be tracked in this video."
-                )           
-
-
-st.markdown("---")
 st.caption(
     "Yerevan Smart Traffic AI | Educational Prototype | "
     "Traffic-light timings are recommendations only."
