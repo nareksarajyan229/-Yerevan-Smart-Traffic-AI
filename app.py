@@ -673,6 +673,16 @@ with tab2:
                     "🚦 Busiest Zone",
                     busiest_zone
                 )
+
+                stat3.metric(
+                    "📈 Average Vehicles / Frame",
+                    f"{average:.2f}"
+                )
+
+                stat4.metric(
+                    "🚦 Busiest Zone",
+                    busiest_zone
+                )
 st.session_state["video_counts"] = unique_counts
 st.session_state["video_zones"] = unique_zones
 st.session_state["video_frames"] = analyzed_frames
@@ -683,6 +693,19 @@ show_results(
     analysis_type="Video Analysis",
     analyzed_frames=analyzed_frames
 )
+
+        else:
+                st.warning(
+                    "No vehicles could be tracked in this video."
+                )           
+
+
+st.markdown("---")
+st.caption(
+    "Yerevan Smart Traffic AI | Educational Prototype | "
+    "Traffic-light timings are recommendations only."
+)
+
 
             else:
                 st.warning(
