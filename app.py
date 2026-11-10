@@ -653,11 +653,14 @@ with tab2:
         # Display saved results outside the Start button
         if "video_counts" in st.session_state:
 
-            unique_counts = st.session_state["video_counts"]
-            unique_zones = st.session_state["video_zones"]
-            analyzed_frames = st.session_state["video_frames"]
-            preview = st.session_state["video_preview"]
-            total_vehicles = st.session_state["video_total"]
+            unique_counts = st.session_state.get("video_counts", {})
+unique_zones = st.session_state.get("video_zones", {})
+analyzed_frames = st.session_state.get("video_frames", 0)
+preview = st.session_state.get("video_preview", None)
+total_vehicles = st.session_state.get(
+    "video_total",
+    sum(unique_counts.values())
+)
 
             st.success("Video tracking completed!")
 
