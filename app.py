@@ -205,6 +205,20 @@ def show_results(counts, zones, is_average=False):
     total = sum(counts.values())
     level, suggested_time = traffic_level(total)
 
+    st.subheader("🌐 Live System Overview")
+
+    overview1, overview2, overview3, overview4 = st.columns(4)
+
+    overview1.metric("🟢 System Status", "ONLINE")
+    
+    if is_average:
+        overview2.metric("🚗 Vehicles / Frame", f"{total:.2f}")
+    else:
+        overview2.metric("🚗 Total Vehicles", int(total))
+
+    overview3.metric("📊 Traffic Level", level)
+    overview4.metric("⚡ AI Engine", "ACTIVE")
+
     st.markdown("---")
     st.header("📊 Traffic Analysis")
 
