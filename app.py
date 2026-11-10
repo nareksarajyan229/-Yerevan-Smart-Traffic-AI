@@ -244,28 +244,7 @@ def show_results(counts, zones, is_average=False):
 
     times = green_times(zones)
 
-    st.subheader("🤖 AI Analysis Summary")
-
-    if sum(zones.values()) > 0:
-        busiest_zone = max(zones, key=zones.get)
-
-        if level == "HIGH":
-            st.error(
-                f"🔴 High traffic detected. "
-                f"{busiest_zone} zone has the highest vehicle concentration."
-            )
-        elif level == "MEDIUM":
-            st.warning(
-                f"🟡 Moderate traffic detected. "
-                f"{busiest_zone} zone has the highest vehicle concentration."
-            )
-        else:
-            st.success(
-                f"🟢 Traffic is flowing smoothly. "
-                f"{busiest_zone} zone has the highest vehicle concentration."
-            )
-    else:
-        st.info("No vehicles detected. Traffic is currently clear.")
+   
 
     st.subheader("🤖 AI Analysis Summary")
 
