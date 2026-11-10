@@ -201,6 +201,7 @@ def green_times(zones):
 
     return times
 
+```python
 def show_results(counts, zones, is_average=False):
     total = sum(counts.values())
     level, suggested_time = traffic_level(total)
@@ -216,16 +217,13 @@ def show_results(counts, zones, is_average=False):
         col1.metric("Total Vehicles", int(total))
 
     if level == "LOW":
-    traffic_color = "🟢"
-elif level == "MEDIUM":
-    traffic_color = "🟡"
-else:
-    traffic_color = "🔴"
+        traffic_color = "🟢"
+    elif level == "MEDIUM":
+        traffic_color = "🟡"
+    else:
+        traffic_color = "🔴"
 
-col2.metric(
-    "Traffic Level",
-    f"{traffic_color} {level}"
-)
+    col2.metric("Traffic Level", f"{traffic_color} {level}")
     col3.metric("Suggested Green Time", f"{suggested_time} sec")
     col4.metric("AI Detection", "ACTIVE", delta="Analysis completed")
 
@@ -266,6 +264,7 @@ col2.metric(
 
     st.pyplot(fig)
     plt.close(fig)
+```
 
 
 tab1, tab2 = st.tabs([
