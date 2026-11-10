@@ -586,6 +586,34 @@ with tab2:
                 col1.metric("Unique Vehicles", len(track_info))
                 col2.metric("Analyzed Frames", analyzed_frames)
 
+                st.subheader("📊 Video Analysis Statistics")
+
+                busiest_zone = max(unique_zones, key=unique_zones.get)
+
+                stat1, stat2, stat3, stat4 = st.columns(4)
+
+                stat1.metric(
+                    "🚗 Tracked Vehicles",
+                    len(track_info)
+                )
+
+                stat2.metric(
+                    "🎞️ Analyzed Frames",
+                    analyzed_frames
+                )
+
+                average = len(track_info) / analyzed_frames if analyzed_frames > 0 else 0
+
+                stat3.metric(
+                    "📈 Average Vehicles / Frame",
+                    f"{average:.2f}"
+                )
+
+                stat4.metric(
+                    "🚦 Busiest Zone",
+                    busiest_zone
+                )
+
                 show_results(unique_counts, unique_zones)
 
             else:
