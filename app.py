@@ -199,6 +199,17 @@ def traffic_level(total):
         return "MEDIUM", 35
     else:
         return "HIGH", 50
+
+def traffic_density(average):
+
+    if average < 3:
+        return "LOW"
+
+    elif average < 8:
+        return "MEDIUM"
+
+    else:
+        return "HIGH"
 def green_times(zones):
     total = sum(zones.values())
 
@@ -653,6 +664,8 @@ with tab2:
                     total_frame_vehicles / frame_number
                     if frame_number > 0 else 0
                 )
+
+                density = traffic_density(average)
                 # Save results in session state
                 st.session_state["video_counts"] = unique_counts
                 st.session_state["video_zones"] = unique_zones
@@ -660,6 +673,7 @@ with tab2:
                 st.session_state["video_preview"] = preview
                 st.session_state["video_total"] = len(track_info)
                 st.session_state["video_average"] = average
+                st.session_state["video_density"] = density
 
             else:
                 st.warning(
@@ -673,7 +687,10 @@ with tab2:
             unique_zones = st.session_state.get("video_zones", {})
             analyzed_frames = st.session_state.get("video_frames", 0)
             preview = st.session_state.get("video_preview", None),
-            average = st.session_state.get("video_average", 0)
+            average = st.session_state.get("video_average", 0),
+            density = st.session_state.get(
+                "video_density", "UNKNOWN"
+            )
             total_vehicles = st.session_state.get(
                 "video_total",
                 sum(unique_counts.values())
@@ -701,7 +718,7 @@ with tab2:
                 key=unique_zones.get
             )
 
-            stat1, stat2, stat3, stat4 = st.columns(4)
+            stat1, stat2, stat3, stat4, stat5 = st.columns(5)
 
             stat1.metric(
                 "🚗 Tracked Vehicles",
@@ -723,6 +740,10 @@ with tab2:
                 busiest_zone
             )
 
+            stat5.metric(
+                "🚦 Traffic Density",
+                density
+            )
             show_results(
                 unique_counts,
                 unique_zones,
