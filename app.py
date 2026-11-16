@@ -698,12 +698,14 @@ with tab2:
 
             st.success("Video tracking completed!")
 
-            if preview is not None:
+            if preview is not None and preview.size > 0:
                 st.image(
                     cv2.cvtColor(preview, cv2.COLOR_BGR2RGB),
                     caption="ByteTrack Vehicle Tracking",
                     use_container_width=True
                 )
+            else:
+                st.warning("⚠️ Video preview is not available.")
 
             col1, col2 = st.columns(2)
 
