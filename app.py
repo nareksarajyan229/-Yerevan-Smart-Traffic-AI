@@ -571,7 +571,7 @@ with tab2:
                 results = tracking_model.track(
                     frame,
                     persist=True,
-                    tracker="custom_bytetrack.yaml",
+                    tracker="bytetrack.yaml",
                     classes=list(VEHICLE_CLASSES.keys()),
                     conf=0.20,
                     iou=0.5,
@@ -680,6 +680,7 @@ with tab2:
             st.subheader("📊 Video Analysis Statistics")
 
             busiest_zone = max(
+                
                 unique_zones,
                 key=unique_zones.get
             )
