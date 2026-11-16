@@ -555,6 +555,9 @@ with tab2:
             analyzed_frames = 0
             preview = None
 
+            total_frame_vehicles = 0
+
+            
             progress = st.progress(0)
 
             total_frames = int(
@@ -579,6 +582,13 @@ with tab2:
                 )
 
                 result = results[0]
+
+                frame_vehicle_count = 0
+
+                if result.boxes is not None:
+                    frame_vehicle_count = len(result.boxes)
+                
+                total_frame_vehicles += frame_vehicle_count
 
                 if result.boxes is not None and result.boxes.id is not None:
 
@@ -639,12 +649,17 @@ with tab2:
                     unique_counts[vehicle["class"]] += 1
                     unique_zones[vehicle["zone"]] += 1
 
+                average = (
+                    total_frame_vehicles / frame_number
+                    if frame_number > 0 else 0
+                )
                 # Save results in session state
                 st.session_state["video_counts"] = unique_counts
                 st.session_state["video_zones"] = unique_zones
                 st.session_state["video_frames"] = analyzed_frames
                 st.session_state["video_preview"] = preview
                 st.session_state["video_total"] = len(track_info)
+                st.session_state["video_average"] = average
 
             else:
                 st.warning(
@@ -657,7 +672,8 @@ with tab2:
             unique_counts = st.session_state.get("video_counts", {})
             unique_zones = st.session_state.get("video_zones", {})
             analyzed_frames = st.session_state.get("video_frames", 0)
-            preview = st.session_state.get("video_preview", None)
+            preview = st.session_state.get("video_preview", None),
+            average = st.session_state.get("video_average", 0)
             total_vehicles = st.session_state.get(
                 "video_total",
                 sum(unique_counts.values())
@@ -695,11 +711,6 @@ with tab2:
             stat2.metric(
                 "🎞️ Analyzed Frames",
                 analyzed_frames
-            )
-
-            average = (
-                total_vehicles / analyzed_frames
-                if analyzed_frames > 0 else 0
             )
 
             stat3.metric(
