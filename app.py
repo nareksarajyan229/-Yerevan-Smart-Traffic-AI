@@ -740,10 +740,14 @@ with tab2:
                 busiest_zone
             )
 
-            stat5.metric(
-                "🚦 Traffic Density",
-                density
-            )
+            if density == "LOW":
+                stat5.success("🟢 Traffic Density: LOW")
+            
+            elif density == "MEDIUM":
+                stat5.warning("🟡 Traffic Density: MEDIUM")
+            
+            else:
+                stat5.error("🔴 Traffic Density: HIGH")
             show_results(
                 unique_counts,
                 unique_zones,
