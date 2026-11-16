@@ -698,12 +698,22 @@ with tab2:
 
             st.success("Video tracking completed!")
 
-            if preview is not None and preview.size > 0:
-                st.image(
-                    cv2.cvtColor(preview, cv2.COLOR_BGR2RGB),
-                    caption="ByteTrack Vehicle Tracking",
-                    use_container_width=True
-                )
+            if preview is not None:
+                try:
+                    preview = np.asarray(preview)
+            
+                    if preview.size > 0:
+                        st.image(
+                            cv2.cvtColor(preview, cv2.COLOR_BGR2RGB),
+                            caption="ByteTrack Vehicle Tracking",
+                            use_container_width=True
+                        )
+                    else:
+                        st.warning("⚠️ Video preview is empty.")
+            
+                except Exception as e:
+                    st.warning(f"⚠️ Preview error: {e}")
+            
             else:
                 st.warning("⚠️ Video preview is not available.")
 
